@@ -21,7 +21,7 @@ struct GameState {
 impl GameState {
   pub fn new(ctx: &mut Context) -> GameResult<GameState> {
     let mut scenestack = scenes::Stack::new(ctx);
-    let menu_scene = Box::new(scenes::menu::MenuScene::new(ctx));
+    let menu_scene = Box::new(scenes::level::LevelScene::new(ctx));
     scenestack.push(menu_scene);
 
     Ok(GameState { scenes: scenestack })
