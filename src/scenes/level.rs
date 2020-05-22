@@ -1,4 +1,5 @@
-use ggez::{event, Context, GameResult};
+use ggez::nalgebra as na;
+use ggez::{event, graphics, Context, GameResult};
 
 use super::scene;
 use crate::scenes;
@@ -25,7 +26,16 @@ impl scene::Scene<event::KeyCode> for LevelScene {
     }
   }
 
-  fn draw(&mut self, _ctx: &mut Context) -> GameResult<()> {
+  fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
+    let circle = graphics::Mesh::new_circle(
+      ctx,
+      graphics::DrawMode::fill(),
+      na::Point2::new(0.0, 0.0),
+      10.0,
+      2.0,
+      graphics::WHITE,
+    )?;
+    graphics::draw(ctx, &circle, (na::Point2::new(330., 380.0),))?;
     Ok(())
   }
 
@@ -34,7 +44,7 @@ impl scene::Scene<event::KeyCode> for LevelScene {
   }
 
   fn input(&mut self, ev: ggez::event::KeyCode, started: bool) {
-    if ev == event::KeyCode::Escape && !started {
+    if ev == event::KeyCode::Tab && !started {
       self.done = true;
     }
   }
