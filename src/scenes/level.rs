@@ -1,16 +1,16 @@
 use ggez::graphics::{Color, DrawMode, DrawParam};
 use ggez::{event, graphics, Context, GameResult};
 
-use super::drawable::Drawable;
-use super::playable::Playable;
+use super::mechanics::drawable::Drawable;
+use super::mechanics::playable::Playable;
+use super::player;
 use super::scene;
 use crate::scenes;
-use crate::scenes::player;
 
 #[allow(dead_code)]
-const MARGIN_COLOR_1: (f32, f32, f32, f32) = (0.347, 0.602, 0.186, 1.00);
+const MARGIN_COLOR_1: (f32, f32, f32, f32) = (0.368, 0.605, 0.272, 1.00);
 #[allow(dead_code)]
-const RIVER_COLOR: (f32, f32, f32, f32) = (0.169, 0.159, 0.747, 1.00);
+const RIVER_COLOR: (f32, f32, f32, f32) = (0.224, 0.237, 0.717, 1.00);
 #[allow(dead_code)]
 const MENU_COLOR_1: (f32, f32, f32, f32) = (0.659, 0.659, 0.659, 1.00);
 
