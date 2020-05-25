@@ -41,7 +41,9 @@ impl EventHandler for GameState {
   fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
     graphics::clear(ctx, graphics::BLACK);
     self.scenes.draw(ctx);
-    graphics::present(ctx)
+    graphics::present(ctx)?;
+    timer::yield_now();
+    Ok(())
   }
 
   fn key_down_event(

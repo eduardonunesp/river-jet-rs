@@ -1,6 +1,6 @@
 use cgmath::Vector2;
 use ggez::graphics::Image;
-use ggez::{event, event::KeyCode, Context};
+use ggez::{event, event::KeyCode, input, Context};
 
 use super::mechanics::drawable::load_image;
 use super::mechanics::drawable::Drawable;
@@ -37,6 +37,7 @@ impl Player {
     }
   }
 
+  #[allow(dead_code)]
   fn get_acceleration(&self) -> f32 {
     self.v_acceleration
   }
@@ -44,12 +45,22 @@ impl Player {
 
 impl Updatable for Player {
   fn update(&mut self, ctx: &mut Context) {
-    self.position += self.velocity;
+    self.velocity = updatable::VECTOR_ZERO;
+
+    if input::keyboard::is_key_pressed(ctx, KeyCode::Left) {
+      self.velocity = updatable::VECTOR_LEFT;
+    } else if input::keyboard::is_key_pressed(ctx, KeyCode::Right) {
+      self.velocity = updatable::VECTOR_RIGHT;
+    }
+
+    self.position += self.velocity * H_MAX_SPEED;
   }
+
+  fn vmove(&mut self, move_vec: Vector2<f32>) {}
 }
 
 impl Playable for Player {
-  fn input(&mut self, ev: event::KeyCode, started: bool) {
+  fn input(&mut self, ev: event::KeyCode, _started: bool) {
     match ev {
       KeyCode::Up => self.v_acceleration += V_ACC,
       KeyCode::Down => self.v_acceleration -= V_ACC,
@@ -58,24 +69,6 @@ impl Playable for Player {
 
     self.v_acceleration = self.v_acceleration.min(V_MIN_SPEED);
     self.v_acceleration = self.v_acceleration.max(V_MAX_SPEED);
-
-    if !started {
-      self.velocity = updatable::VECTOR_ZERO
-    } else {
-      self.velocity += match ev {
-        KeyCode::Right => updatable::VECTOR_RIGHT * H_ACC,
-        KeyCode::Left => updatable::VECTOR_LEFT * H_ACC,
-        _ => updatable::VECTOR_ZERO,
-      };
-
-      if self.velocity.x.abs() >= H_MAX_SPEED {
-        self.velocity.x = if self.velocity.x > 0. {
-          H_MAX_SPEED
-        } else {
-          -H_MAX_SPEED
-        }
-      }
-    }
   }
 }
 

@@ -4,6 +4,7 @@ pub mod level;
 mod mechanics;
 pub mod menu;
 pub mod player;
+mod ship;
 
 // Shortcuts for our scene type.
 pub type Switch = scene::SceneSwitch<ggez::event::KeyCode>;

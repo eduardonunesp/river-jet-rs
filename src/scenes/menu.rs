@@ -9,6 +9,7 @@ pub struct MenuScene {
 }
 
 impl MenuScene {
+  #[allow(dead_code)]
   pub fn new(_ctx: &mut Context) -> Self {
     let done = false;
     let quit = false;
